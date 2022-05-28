@@ -94,10 +94,6 @@ namespace IntelWash.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BuyerId");
-
-                    b.HasIndex("SalesPointId");
-
                     b.ToTable("Sales");
                 });
 
@@ -168,25 +164,6 @@ namespace IntelWash.Migrations
                         .IsRequired();
 
                     b.Navigation("SalesPoint");
-                });
-
-            modelBuilder.Entity("IntelWash.Model.Sale", b =>
-                {
-                    b.HasOne("IntelWash.Model.Buyer", "Buyer")
-                        .WithMany()
-                        .HasForeignKey("BuyerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("IntelWash.Model.SalesPoint", "SalePoint")
-                        .WithMany()
-                        .HasForeignKey("SalesPointId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Buyer");
-
-                    b.Navigation("SalePoint");
                 });
 
             modelBuilder.Entity("IntelWash.Model.SaleData", b =>

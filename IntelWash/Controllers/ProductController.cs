@@ -80,7 +80,7 @@ namespace IntelWash.Controllers
         }
 
         [HttpPut]
-        [Route("/UpdateProduct")]  
+        [Route("/UpdateProductById")]  
         public async Task<ActionResult> Update([FromBody] Product item)
         {
             if (!ModelState.IsValid)

@@ -18,10 +18,10 @@ namespace IntelWash.Model
         public DateTime Time { get; set; }
         [Required]
         public int SalesPointId { get; set; }
-        public SalesPoint? SalePoint { get; set; }
+        
         
         public int  BuyerId { get; set; }
-        public Buyer? Buyer { get; set; }
+        
         
         public ICollection<SaleData> SalesData { get; set; }
         [Required]

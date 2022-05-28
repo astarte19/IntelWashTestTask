@@ -9,6 +9,8 @@ using Microsoft.Extensions.Logging;
 
 namespace IntelWash.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class BuyerController : ControllerBase
     {
         private readonly ApplicationContext context;
@@ -76,7 +78,7 @@ namespace IntelWash.Controllers
         }
 
         [HttpPut]
-        [Route("/UpdateBuyer")]  
+        [Route("/UpdateBuyerById")]  
         public async Task<ActionResult> Update([FromBody] Buyer buyer)
         {
             
