@@ -80,12 +80,6 @@ namespace IntelWash.Migrations
                 {
                     table.PrimaryKey("PK_ProvidedProducts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProvidedProducts_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_ProvidedProducts_SalesPoints_SalesPointId",
                         column: x => x.SalesPointId,
                         principalTable: "SalesPoints",
@@ -145,11 +139,6 @@ namespace IntelWash.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProvidedProducts_ProductId",
-                table: "ProvidedProducts",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ProvidedProducts_SalesPointId",
                 table: "ProvidedProducts",
                 column: "SalesPointId");
@@ -178,6 +167,9 @@ namespace IntelWash.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Products");
+
+            migrationBuilder.DropTable(
                 name: "ProvidedProducts");
 
             migrationBuilder.DropTable(
@@ -185,9 +177,6 @@ namespace IntelWash.Migrations
 
             migrationBuilder.DropTable(
                 name: "SalesIds");
-
-            migrationBuilder.DropTable(
-                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Sales");

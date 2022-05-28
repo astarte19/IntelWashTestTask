@@ -66,8 +66,6 @@ namespace IntelWash.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
-
                     b.HasIndex("SalesPointId");
 
                     b.ToTable("ProvidedProducts");
@@ -160,19 +158,11 @@ namespace IntelWash.Migrations
 
             modelBuilder.Entity("IntelWash.Model.ProvidedProduct", b =>
                 {
-                    b.HasOne("IntelWash.Model.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("IntelWash.Model.SalesPoint", "SalesPoint")
                         .WithMany("ProvidedProducts")
                         .HasForeignKey("SalesPointId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Product");
 
                     b.Navigation("SalesPoint");
                 });

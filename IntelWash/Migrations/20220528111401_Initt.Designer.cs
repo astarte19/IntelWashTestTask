@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntelWash.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220527203116_Initt")]
+    [Migration("20220528111401_Initt")]
     partial class Initt
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,8 +67,6 @@ namespace IntelWash.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
 
                     b.HasIndex("SalesPointId");
 
@@ -162,19 +160,11 @@ namespace IntelWash.Migrations
 
             modelBuilder.Entity("IntelWash.Model.ProvidedProduct", b =>
                 {
-                    b.HasOne("IntelWash.Model.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("IntelWash.Model.SalesPoint", "SalesPoint")
                         .WithMany("ProvidedProducts")
                         .HasForeignKey("SalesPointId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Product");
 
                     b.Navigation("SalesPoint");
                 });

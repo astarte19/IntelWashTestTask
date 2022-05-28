@@ -19,7 +19,7 @@ namespace IntelWash.Model
         [Required]
         public int SalesPointId { get; set; }
         public SalesPoint? SalePoint { get; set; }
-        [Required]
+        
         public int  BuyerId { get; set; }
         public Buyer? Buyer { get; set; }
         
