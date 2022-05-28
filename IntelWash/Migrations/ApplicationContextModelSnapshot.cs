@@ -135,6 +135,9 @@ namespace IntelWash.Migrations
                     b.Property<int>("BuyerId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("SaleId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BuyerId");

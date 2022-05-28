@@ -85,7 +85,6 @@ namespace IntelWash.Controllers
         [Route("/UpdateSalesPoint")]  
         public async Task<ActionResult> Update([FromBody] SalesPoint salesPoint)
         {
-            //Update в SalePoint только по имени
             if (!ModelState.IsValid)
             {
                 return BadRequest();
@@ -97,7 +96,7 @@ namespace IntelWash.Controllers
             oldItem.ProvidedProducts = old_provided;
             context.SalesPoints.Update(oldItem);
             await context.SaveChangesAsync();
-            _logger.LogInformation($"SalesPoint ID:{salesPoint.Id} was updated!");
+            _logger.LogInformation($"SalesPoint ID:{salesPoint.Id} and ProvidedProducts was updated!");
             return Ok();
         }
     }
