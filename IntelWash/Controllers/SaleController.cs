@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using IntelWash.Model;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace IntelWash.Controllers
@@ -23,45 +24,42 @@ namespace IntelWash.Controllers
         }
         [HttpGet]
         [Route("/GetSales")]
-        public IEnumerable<Sale> GetSales()
+        public async Task<IEnumerable<Sale>> GetSales()
         {
-            IEnumerable<Sale> sales = context.Sales.ToArray();
+            IEnumerable<Sale> sales = await context.Sales.Include(s => s.SalesData).ToListAsync();
             _logger.LogInformation("Displayed items in Sales");
             return sales;
         }
         [HttpGet]
         [Route("/GetSaleById/{id}")]
-        public IActionResult GetSalesById(int id)
+        public async Task<ActionResult<Sale>>  GetSalesById(int id)
         {
-            Sale sale = context.Sales.SingleOrDefault(x => x.Id == id);
+            var sale = await context.Sales.FindAsync(id);
+            context.Entry(sale).Collection(s => s.SalesData).Load();
             if (sale == null)
             {
-                _logger.LogInformation($"Sale ID:{id} is null!");
                 return NotFound();
             }
-            else
-            {
-                _logger.LogInformation($"Sale ID:{id}");
-                return Ok(sale);
-            }
+
+            return sale;
         }
         [HttpDelete]
         [Route("/DeleteSaleById/{id}")]
         public async Task<ActionResult> DeleteSaleById(int id)
         {
-            Sale sale = await context.Sales.FindAsync(id);
+            var sale = await context.Sales.FindAsync(id);
             if (sale == null)
             {
-                _logger.LogInformation($"Sale ID:{id} is null!");
                 return NotFound();
             }
-            else
-            {
-                _logger.LogInformation($"Sale ID:{id} was removed!");
-                context.Sales.Remove(context.Sales.SingleOrDefault(p => p.Id ==id));
-                await context.SaveChangesAsync();
-                return Ok();
-            }
+            context.Entry(sale).Collection(s => s.SalesData).Load();
+            foreach (var saleData in sale.SalesData)
+                context.SaleDatas.Remove(saleData);
+
+            context.Sales.Remove(sale);
+            await context.SaveChangesAsync();
+
+            return Ok();
         }
         [HttpPost]
         [Route("/AddSale")]
@@ -74,27 +72,30 @@ namespace IntelWash.Controllers
             _logger.LogInformation($"Sale ID:{sale.Id} was added!");
             context.Sales.Add(sale);
             await context.SaveChangesAsync();
+            
             return Ok();
         }
         [HttpPut]
-        [Route("/UpdateSaleById")]  
-        public async Task<ActionResult> UpdateSale([FromBody] Sale sale)
+        [Route("/UpdateSaleById/{id}")]  
+        public async Task<ActionResult> UpdateSale(int id,  Sale sale)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            Sale oldsale = context.Sales.SingleOrDefault(x => x.Id == sale.Id);
+            Sale oldsale = context.Sales.SingleOrDefault(x => x.Id == id);
             if (oldsale == null) return NotFound();
             oldsale.SalesPointId = sale.SalesPointId;
             oldsale.BuyerId = sale.BuyerId;
-            oldsale.TotalAmmount = sale.TotalAmmount;
+            
             var old_saledata = sale.SalesData.ToArray();
             oldsale.SalesData = old_saledata;
             context.Sales.Update(oldsale);
             await context.SaveChangesAsync();
             _logger.LogInformation($"Sale ID:{sale.Id} and SalesData was updated!");
+            
             return Ok();
         }
+        
     }
 }

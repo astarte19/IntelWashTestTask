@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "D3XnumjYA/9Vbo2s3hwJXXJxbSDw3rMe8FfbnvHs+/3JzwD9cgSvHp+K7HzqdM5MdvoQPcgNVLpvOnQtGC/XXQ==",
+  "dgSpecHash": "TvQ0lFgkskLK1KZDKkbutGjMDwfpiTlrchhqKqzpmR8RfRrGuXq/9yELrIY6ORrhNj8xKAYWwdN0PRHh0GscEw==",
   "success": true,
   "projectFilePath": "/Users/swiperrr/RiderProjects/IntelWash/IntelWash/IntelWash.csproj",
   "expectedPackageFiles": [
@@ -12,6 +12,7 @@
     "/Users/swiperrr/.nuget/packages/microsoft.entityframeworkcore.abstractions/5.0.0/microsoft.entityframeworkcore.abstractions.5.0.0.nupkg.sha512",
     "/Users/swiperrr/.nuget/packages/microsoft.entityframeworkcore.analyzers/5.0.0/microsoft.entityframeworkcore.analyzers.5.0.0.nupkg.sha512",
     "/Users/swiperrr/.nuget/packages/microsoft.entityframeworkcore.design/5.0.0/microsoft.entityframeworkcore.design.5.0.0.nupkg.sha512",
+    "/Users/swiperrr/.nuget/packages/microsoft.entityframeworkcore.inmemory/5.0.0/microsoft.entityframeworkcore.inmemory.5.0.0.nupkg.sha512",
     "/Users/swiperrr/.nuget/packages/microsoft.entityframeworkcore.relational/5.0.0/microsoft.entityframeworkcore.relational.5.0.0.nupkg.sha512",
     "/Users/swiperrr/.nuget/packages/microsoft.entityframeworkcore.sqlite/5.0.0/microsoft.entityframeworkcore.sqlite.5.0.0.nupkg.sha512",
     "/Users/swiperrr/.nuget/packages/microsoft.entityframeworkcore.sqlite.core/5.0.0/microsoft.entityframeworkcore.sqlite.core.5.0.0.nupkg.sha512",

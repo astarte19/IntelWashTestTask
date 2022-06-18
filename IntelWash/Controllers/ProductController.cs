@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using IntelWash.Model;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace IntelWash.Controllers
@@ -33,7 +34,7 @@ namespace IntelWash.Controllers
         [Route("/GetProductById/{id}")]
         public IActionResult GetProductById(int id)
         {
-           // IEnumerable<Product> products = context.Products.Where(x => x.Id == id).ToArray();
+           
             Product product = context.Products.SingleOrDefault(x => x.Id == id);
             if (product == null)
             {
@@ -79,22 +80,44 @@ namespace IntelWash.Controllers
             return Ok();
         }
 
+       
+        
         [HttpPut]
-        [Route("/UpdateProductById")]  
-        public async Task<ActionResult> Update([FromBody] Product item)
+        [Route("/UpdateProductById/{id}")]
+        public async Task<IActionResult> Update(int id, Product product)
         {
-            if (!ModelState.IsValid)
+            if (id != product.Id)
             {
-                return BadRequest();
+                throw new Exception("Ids don't match!");
             }
-            Product oldItem = context.Products.SingleOrDefault(x => x.Id == item.Id);
-            if (oldItem == null) return NotFound();
-            oldItem.Name = item.Name;
-            oldItem.Price = item.Price;
-            context.Products.Update(oldItem);
-            await context.SaveChangesAsync();
-            _logger.LogInformation($"Product ID:{item.Id} was updated!");
-            return Ok();
+            
+            if (context.Products.Where(p => p.Id == id).Any(p => p.Name != product.Name))
+            {
+                if (context.Products.Any(p => p.Name == product.Name))
+                {
+                    throw new Exception($"item with this name: {product.Name} already exists!");
+                }
+            }
+            
+            context.Entry(product).State = EntityState.Modified;
+            try
+            {
+                await context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!context.Products.Any(e => e.Id == id))
+                {
+                    throw new Exception($"item with id{id} not found!");
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return CreatedAtAction("GetProductById", new { id = product.Id }, product);
         }
+        
     }
 }

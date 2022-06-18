@@ -52,3 +52,4 @@
 /Users/swiperrr/RiderProjects/IntelWash/IntelWash/obj/Release/net5.0/ref/IntelWash.dll
 /Users/swiperrr/RiderProjects/IntelWash/IntelWash/obj/Release/net5.0/IntelWash.pdb
 /Users/swiperrr/RiderProjects/IntelWash/IntelWash/obj/Release/net5.0/IntelWash.genruntimeconfig.cache
+/Users/swiperrr/RiderProjects/IntelWash/IntelWash/bin/Release/net5.0/Microsoft.EntityFrameworkCore.InMemory.dll

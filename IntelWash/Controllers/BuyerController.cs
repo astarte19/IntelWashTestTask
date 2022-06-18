@@ -98,7 +98,7 @@ namespace IntelWash.Controllers
             }
             else
             {
-                oldbuyer.SalesId = old_salesids;
+               
                 context.Buyers.Update(oldbuyer);
                 await context.SaveChangesAsync();
                 _logger.LogInformation($"Buyer ID:{buyer.Id} with saleids was updated!");

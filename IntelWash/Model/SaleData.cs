@@ -1,20 +1,32 @@
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace IntelWash.Model
 {
     public class SaleData
     {
-        [Key]
+        private readonly ApplicationContext _context;
+        
+        public SaleData(ApplicationContext context)
+        {
+            _context = context;
+        }
+        
         public int Id { get; set; }
-        [Required]
+        
         public int ProductId { get; set; }
-        [Required]
+        
         public int ProductQuantity { get; set; }
-        [Required]
-        public decimal ProductIdAmount { get; set; }
         
-        public Sale? Sale { get; set; }
-        
-        public int SaleId { get; set; }
+        public decimal ProductIdAmount
+        {
+            get
+            {
+                if (_context is null)
+                    return 0;
+                var product = _context.Products.FirstOrDefault(p => p.Id == ProductId);
+                return ProductQuantity * product.Price;
+            }
+        }
     }
 }

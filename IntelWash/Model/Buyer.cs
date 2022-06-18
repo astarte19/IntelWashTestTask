@@ -5,13 +5,19 @@ namespace IntelWash.Model
 {
     public class Buyer
     {
-        [Key]
+        
         
         public int Id { get; set; }
-        [Required]
+        
         public string Name { get; set; }
         
-        public  ICollection<SalesId> SalesId { get; set; }
+        public  List<SalesId> SalesId { get; set; }
         
+    }
+
+    public class SalesId
+    {
+        public int Id { get; set; }
+        public int SaleId { get; set; }
     }
 }

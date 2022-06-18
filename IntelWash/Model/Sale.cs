@@ -10,21 +10,31 @@ namespace IntelWash.Model
         {
             SalesData = new HashSet<SaleData>();
         }
-        [Key]
+        
         public int Id { get; set; }
-        [Required]
+       [DataType(DataType.Date)]
         public DateTime Date { get; set; }
-        [Required]
+        [DataType(DataType.Time)]
         public DateTime Time { get; set; }
-        [Required]
+       
         public int SalesPointId { get; set; }
         
-        
-        public int  BuyerId { get; set; }
-        
+        public int?  BuyerId { get; set; }
         
         public ICollection<SaleData> SalesData { get; set; }
-        [Required]
-        public decimal TotalAmmount { get; set; }
+       
+        public decimal TotalAmount
+        {
+            get
+            {
+                decimal answer = 0;
+                foreach (var saleData in SalesData)
+                    answer += saleData.ProductIdAmount;
+                return answer;
+            }
+        }
+            
+         
+        
     }
 }
